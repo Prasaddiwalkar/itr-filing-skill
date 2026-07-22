@@ -10,7 +10,7 @@ ITR-2 with foreign assets, RSUs, capital gains, and DTAA.
 
 ## 🚀 Install in 30 Seconds
 
-1. Download [itr-filing-latest.skill](https://github.com/Prasaddiwalkar/itr-filing-skil/releases/latest/download/itr-filing-latest.skill)
+1. Download [itr-filing-latest.skill](https://github.com/Prasaddiwalkar/itr-filing-skill/releases/latest/download/itr-filing-latest.skill)
 2. Open [Claude.ai](https://claude.ai)
 3. Upload the `.skill` file in any chat
 4. Click **Save skill**

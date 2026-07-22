@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'skill/**'
+      - '.github/workflows/package-skill.yml'
 
 jobs:
   package:

@@ -11,23 +11,29 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set version
+        id: version
+        run: echo "VERSION=$(date +%Y.%m.%d)" >> "$GITHUB_OUTPUT"
+
       - name: Package skill
         run: |
+          mkdir -p releases
           cd skill
-          VERSION=$(date +%Y.%m.%d)
           zip -r ../releases/itr-filing-latest.skill .
-          zip -r ../releases/itr-filing-v${VERSION}.skill .
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          zip -r ../releases/itr-filing-v${{ steps.version.outputs.VERSION }}.skill .
 
-      - name: Commit releases
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add releases/
-          git diff --staged --quiet || git commit -m "chore: auto-package skill v${{ env.VERSION }} [skip ci]"
-          git push
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
+          tag: v${{ steps.version.outputs.VERSION }}
+          name: v${{ steps.version.outputs.VERSION }}
+          generateReleaseNotes: true
+          artifacts: "releases/*.skill"
+          draft: false
+          prerelease: false
